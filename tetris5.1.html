@@ -330,6 +330,17 @@
 
 		function drawLevel() {
 
+			if (brick[0].complete !== true ||
+				brick[1].complete !== true ||
+				background.complete !== true ||
+				grid[0].complete !== true ||
+				grid[1].complete !== true ||
+				backgrid[0].complete !== true ||
+				backgrid[1].complete !== true ||
+				snd.readyState !== 4) {
+				return;
+			}
+
 			if (initial == 0 && background.complete == true) {
 				initial = 1;
 				context.drawImage(background, 0, 0, window.innerWidth, window.innerHeight);
