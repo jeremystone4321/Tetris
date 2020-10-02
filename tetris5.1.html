@@ -1258,7 +1258,7 @@ touchx > touchwindowx / 3.5 && touchx < touchwindowx / 1.4 && touchy < ybottom
 
 		document.addEventListener("touchstart", touchstart);
 		document.addEventListener("touchend", touchend);
-		document.addEventListener("touchmove", touchmove);
+		document.addEventListener("touchmove", touchmove, { passive: false });
 
 		var touchmove;
 		var touchstart;
