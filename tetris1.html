@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title> Paca MAn</title>
+	<style>
+		*{ padding: 0; margin: 0; }
+		canvas {background: #eee; display: block; margin: 0 auto; }
+	</style>
+</head>
+<body>
+
+<canvas id="myCanvas" width="800" height="1000"></canvas>
+
+<script>
+
+
+var canvas = document.getElementById("myCanvas");
+var context = canvas.getContext("2d");
+
+var level=[
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+     ];
+	 
+	 
+var levVerLen = level.length;
+var levHorzLen = level[0].length;
+
+
+var brick = new Array();
+var background = new Image();
+
+brick[0] = new Image();
+brick[0].src = "brick1.png";
+background.src = "background1.png";
+
+
+var currentpiece;
+var nextpiece;
+var gamespeed;
+
+var keypress = 0;
+
+var scalex;
+var scaley;
+
+var speed;
+
+var movepiecetimer=0;
+
+scalex=1;
+speed=10;
+
+var frame=0;
+var snd = new Audio("data:audio/wav;base64,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");  
+    
+document.addEventListener("keydown", keyDown, false);
+document.addEventListener("keyup", keyUp, false);
+
+
+currentpiece=[0,3,-1,4]; // type of shape, location x, location y, color
+
+
+function drawLevel () {
+	
+
+	context.drawImage(background, 0, 0);
+
+
+	for (var v = 0; v < level.length; v++) {
+		for (var h = 0; h < level[0].length; h++) {
+			var xpos = h*36;
+			var ypos = v*36;
+			if (level[v][h] == 1) {
+				context.drawImage(brick[0], xpos*scalex+220, ypos*scalex+72, brick[0].width*scalex, brick[0].height*scalex);	
+			}
+		}
+	}
+
+
+	if (movepiecetimer == 3*(21-(speed*2))){
+		
+
+		movepiecedown();
+		movepiecetimer=0;
+		
+
+		if (Math.random()*10<3){
+			if (level[currentpiece[2]][currentpiece[1]+1]==0 && level[currentpiece[1]+1] !== undefined){
+				currentpiece[1]++;
+				if (currentpiece[1]==9){
+					currentpiece[1]=9;
+				}
+			}
+		}
+		else if (Math.random()*10<3){
+			if (level[currentpiece[2]][currentpiece[1]-1]==0 && level[currentpiece[1]-1] !== undefined){
+				currentpiece[1]--;
+				if (currentpiece[1]==-1){
+					currentpiece[1]=0;
+				}
+			}
+		}
+
+	}
+
+	movepiecetimer++;
+
+	
+	drawcurrentpiece();
+
+	frame++;
+
+	
+			context.fillStyle = "white";
+context.font = (40*scalex) + "px Arial";
+context.fillText(Math.trunc(frame/60), 40*scalex, 780*scalex);
+
+
+}
+
+function drawcurrentpiece(){
+
+	context.drawImage(brick[0], (currentpiece[1]*36)+220, (currentpiece[2]*36)+72);
+
+}
+
+function movepiecedown(){
+
+	if (level[currentpiece[2]+1] !== undefined  && level[currentpiece[2]+1][currentpiece[1]] == 0){
+		currentpiece[2]++;
+		console.log(level[currentpiece[2]+1][currentpiece[1]]);
+	}
+	else {
+		placepiece();
+	}
+}
+
+function placepiece(){
+
+	level[currentpiece[2]][currentpiece[1]]=1;
+	snd.play();
+	addpiecetop();
+
+}
+
+function addpiecetop(){
+
+	currentpiece=[0,3,-1,4];
+
+}
+
+
+function randompiece(){
+
+
+}
+
+function keyDown(e){
+
+}
+
+function keyUp(e){
+
+}
+
+setInterval(drawLevel, 16);
+
+debugger;
+
+
+</script>
+
+</body>
+</html>
