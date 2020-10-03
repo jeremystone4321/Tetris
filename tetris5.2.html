@@ -519,8 +519,10 @@
 			context.fillStyle = "purple";
 			context.fillRect(touchwindowx / 3.5, ytop * 0.9, touchwindowx / 2, (ybottom - ytop) * 2.2);
 
-			
+			request = requestAnimationFrame(drawLevel);
 		}
+
+		var request;
 
 		var flashtime = 0;
 
@@ -1396,7 +1398,8 @@ touchx > touchwindowx / 3.5 && touchx < touchwindowx / 1.4 && touchy < ybottom
 			e.preventDefault();
 		}
 
-		setInterval(drawLevel, 16);
+		//setInterval(drawLevel, 16);
+		window.requestAnimationFrame(drawLevel);
 
 		//debugger;
 
