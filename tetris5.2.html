@@ -329,9 +329,15 @@
 
 		var initial = 0;
 
-
+		var load = 0;
 
 		function drawLevel() {
+
+			load++;
+
+			if (load < 240) {
+				return;
+			}
 
 			if (brick[0].complete !== true ||
 				brick[1].complete !== true ||
