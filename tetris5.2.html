@@ -328,11 +328,13 @@
 
 		var initial = 0;
 
+
+
 		function drawLevel() {
 
 			if (initial == 0 && background.complete == true) {
 				initial = 1;
-				context.drawImage(background, 0, 0, context.innerWidth, context.innerHeight);
+				context.drawImage(background, 0, 0, canvas.width, canvas.height);
 				
 			}
 
