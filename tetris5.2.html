@@ -333,12 +333,6 @@
 
 		function drawLevel() {
 
-			load++;
-
-			if (load < 240) {
-				return;
-			}
-
 			if (brick[0].complete !== true ||
 				brick[1].complete !== true ||
 				background.complete !== true ||
@@ -352,7 +346,7 @@
 
 			if (initial == 0 && background.complete == true) {
 				initial = 1;
-				//context.drawImage(background, 0, 0, canvas.width, canvas.height);
+				context.drawImage(background, 0, 0, canvas.width, canvas.height);
 				
 			}
 
